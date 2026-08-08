@@ -5,26 +5,26 @@
 <div th:replace="~{fragments/layout :: navbar}"></div>
 
 <main class="container page-shell">
-	<div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+	<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
 		<div>
-			<h1 class="h2 mb-1">Consultants</h1>
-			<p class="text-secondary mb-0">Browse, search, edit, or remove consultant records.</p>
+			<h1 class="h2 mb-1">Consultant List</h1>
+			<p class="text-secondary mb-0">View and manage all consultants.</p>
 		</div>
 		<a class="btn btn-primary" th:href="@{/consultants/add}">Add Consultant</a>
 	</div>
 
-	<div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
-	<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+	<div th:if="${successMessage}" class="alert alert-success" role="alert" th:text="${successMessage}"></div>
+	<div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
 
 	<div class="content-panel mb-4">
-		<form class="row g-2 align-items-end" th:action="@{/consultants/search}" method="get">
-			<div class="col-md-8">
+		<form class="row g-3 align-items-end" th:action="@{/consultants/search}" method="get">
+			<div class="col-12 col-md-8">
 				<label for="keyword" class="form-label">Search by name or technology</label>
 				<input id="keyword" type="text" name="keyword" class="form-control"
-					th:value="${keyword}" placeholder="e.g. Java or Jane Doe">
+					th:value="${keyword}" placeholder="e.g. Java or Ananta Aryal">
 			</div>
-			<div class="col-md-4 d-flex gap-2">
-				<button type="submit" class="btn btn-primary flex-fill">Search</button>
+			<div class="col-12 col-md-4 d-grid d-sm-flex gap-2">
+				<button type="submit" class="btn btn-primary">Search</button>
 				<a class="btn btn-outline-secondary" th:href="@{/consultants}">Reset</a>
 			</div>
 		</form>
@@ -33,14 +33,14 @@
 	<div class="content-panel">
 		<div class="table-responsive">
 			<table class="table table-hover align-middle mb-0">
-				<thead>
+				<thead class="table-light">
 				<tr>
 					<th scope="col">Name</th>
 					<th scope="col">Email</th>
 					<th scope="col">Phone</th>
 					<th scope="col">Technology</th>
 					<th scope="col">Experience</th>
-					<th scope="col" class="text-end">Actions</th>
+					<th scope="col" class="text-nowrap text-md-end">Actions</th>
 				</tr>
 				</thead>
 				<tbody>
@@ -53,12 +53,12 @@
 					<td th:text="${consultant.phone}">Phone</td>
 					<td th:text="${consultant.technology}">Technology</td>
 					<td th:text="${consultant.experience}">0</td>
-					<td class="text-end">
-						<a class="btn btn-sm btn-outline-primary"
+					<td class="text-md-end text-nowrap">
+						<a class="btn btn-sm btn-outline-primary me-1"
 							th:href="@{/consultants/edit/{id}(id=${consultant.id})}">Edit</a>
 						<a class="btn btn-sm btn-outline-danger"
 							th:href="@{/consultants/delete/{id}(id=${consultant.id})}"
-							onclick="return confirm('Delete this consultant?');">Delete</a>
+							th:attr="onclick=|return confirm('Are you sure you want to delete ${consultant.name}?');|">Delete</a>
 					</td>
 				</tr>
 				</tbody>

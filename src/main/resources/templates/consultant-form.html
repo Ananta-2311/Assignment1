@@ -7,47 +7,57 @@
 <main class="container page-shell">
 	<div class="mb-4">
 		<h1 class="h2 mb-1" th:text="${pageTitle}">Consultant Form</h1>
-		<p class="text-secondary mb-0">Enter consultant details and save the record.</p>
+		<p class="text-secondary mb-0">Fill in the consultant details below.</p>
 	</div>
 
-	<div class="content-panel col-lg-8 px-0">
-		<form th:action="@{${formAction}}" th:object="${consultant}" method="post" class="p-4">
+	<div class="content-panel col-12 col-lg-8 mx-auto mx-lg-0">
+		<form th:action="@{${formAction}}" th:object="${consultant}" method="post" novalidate>
 			<div class="mb-3">
-				<label for="name" class="form-label">Name</label>
-				<input id="name" type="text" class="form-control"
+				<div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+					<label for="name" class="form-label mb-0">Name</label>
+					<span class="text-danger small" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+				</div>
+				<input id="name" type="text" class="form-control mt-1"
 					th:field="*{name}" th:classappend="${#fields.hasErrors('name')} ? ' is-invalid'">
-				<div class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 			</div>
 
 			<div class="mb-3">
-				<label for="email" class="form-label">Email</label>
-				<input id="email" type="email" class="form-control"
+				<div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+					<label for="email" class="form-label mb-0">Email</label>
+					<span class="text-danger small" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+				</div>
+				<input id="email" type="email" class="form-control mt-1"
 					th:field="*{email}" th:classappend="${#fields.hasErrors('email')} ? ' is-invalid'">
-				<div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 			</div>
 
 			<div class="mb-3">
-				<label for="phone" class="form-label">Phone</label>
-				<input id="phone" type="text" class="form-control"
+				<div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+					<label for="phone" class="form-label mb-0">Phone</label>
+					<span class="text-danger small" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></span>
+				</div>
+				<input id="phone" type="text" class="form-control mt-1"
 					th:field="*{phone}" th:classappend="${#fields.hasErrors('phone')} ? ' is-invalid'">
-				<div class="invalid-feedback" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></div>
 			</div>
 
 			<div class="mb-3">
-				<label for="technology" class="form-label">Technology</label>
-				<input id="technology" type="text" class="form-control"
+				<div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+					<label for="technology" class="form-label mb-0">Technology</label>
+					<span class="text-danger small" th:if="${#fields.hasErrors('technology')}" th:errors="*{technology}"></span>
+				</div>
+				<input id="technology" type="text" class="form-control mt-1"
 					th:field="*{technology}" th:classappend="${#fields.hasErrors('technology')} ? ' is-invalid'">
-				<div class="invalid-feedback" th:if="${#fields.hasErrors('technology')}" th:errors="*{technology}"></div>
 			</div>
 
 			<div class="mb-4">
-				<label for="experience" class="form-label">Experience (years)</label>
-				<input id="experience" type="number" min="0" class="form-control"
+				<div class="d-flex flex-wrap justify-content-between align-items-baseline gap-2">
+					<label for="experience" class="form-label mb-0">Experience</label>
+					<span class="text-danger small" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></span>
+				</div>
+				<input id="experience" type="number" min="0" class="form-control mt-1"
 					th:field="*{experience}" th:classappend="${#fields.hasErrors('experience')} ? ' is-invalid'">
-				<div class="invalid-feedback" th:if="${#fields.hasErrors('experience')}" th:errors="*{experience}"></div>
 			</div>
 
-			<div class="d-flex gap-2">
+			<div class="d-grid d-sm-flex gap-2">
 				<button type="submit" class="btn btn-primary" th:text="${pageTitle}">Save</button>
 				<a class="btn btn-outline-secondary" th:href="@{/consultants}">Cancel</a>
 			</div>
