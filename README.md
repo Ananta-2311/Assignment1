@@ -19,8 +19,17 @@ Java Spring Boot web application for managing consultants.
 
 ## Configuration
 
-1. Run `database.sql` in MySQL to create the `consultant_management` database and `consultants` table.
-2. Replace `YOUR_MYSQL_USERNAME` and `YOUR_MYSQL_PASSWORD` in `src/main/resources/application.properties` with your MySQL credentials.
+Local MySQL credentials (already configured in `application.properties`):
+
+- Username: `consultant`
+- Password: `consultant123`
+- Database: `consultant_management`
+
+To recreate the schema and sample data:
+
+```bash
+mysql -u root -pconsultant123 < database.sql
+```
 
 ## Run
 
