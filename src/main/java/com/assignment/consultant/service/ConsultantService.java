@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.assignment.consultant.exception.ConsultantNotFoundException;
 import com.assignment.consultant.model.Consultant;
 import com.assignment.consultant.repository.ConsultantRepository;
 
@@ -26,7 +27,7 @@ public class ConsultantService {
 	@Transactional(readOnly = true)
 	public Consultant getConsultantById(Long id) {
 		return consultantRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Consultant not found with id: " + id));
+				.orElseThrow(() -> new ConsultantNotFoundException("Consultant not found"));
 	}
 
 	public Consultant addConsultant(Consultant consultant) {
@@ -48,7 +49,7 @@ public class ConsultantService {
 
 	public void deleteConsultant(Long id) {
 		if (!consultantRepository.existsById(id)) {
-			throw new IllegalArgumentException("Consultant not found with id: " + id);
+			throw new ConsultantNotFoundException("Consultant not found");
 		}
 		consultantRepository.deleteById(id);
 	}

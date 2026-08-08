@@ -1,5 +1,7 @@
 package com.assignment.consultant.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,10 +34,13 @@ public class ConsultantController {
 	}
 
 	@GetMapping("/consultants")
-	public String listConsultants(Model model) {
-		model.addAttribute("consultants", consultantService.getAllConsultants());
-		model.addAttribute("keyword", "");
-		return "consultants";
+	public String listConsultants(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+		return showConsultantList(keyword, model);
+	}
+
+	@GetMapping("/consultants/search")
+	public String searchConsultants(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
+		return showConsultantList(keyword, model);
 	}
 
 	@GetMapping("/consultants/add")
@@ -52,6 +57,7 @@ public class ConsultantController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pageTitle", "Add Consultant");
 			model.addAttribute("formAction", "/consultants/add");
+			model.addAttribute("errorMessage", "Please correct the highlighted fields and try again.");
 			return "consultant-form";
 		}
 
@@ -61,17 +67,11 @@ public class ConsultantController {
 	}
 
 	@GetMapping("/consultants/edit/{id}")
-	public String showEditForm(@PathVariable Long id, Model model, RedirectAttributes redirectAttributes) {
-		try {
-			model.addAttribute("consultant", consultantService.getConsultantById(id));
-			model.addAttribute("pageTitle", "Edit Consultant");
-			model.addAttribute("formAction", "/consultants/edit/" + id);
-			return "consultant-form";
-		}
-		catch (IllegalArgumentException ex) {
-			redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-			return "redirect:/consultants";
-		}
+	public String showEditForm(@PathVariable Long id, Model model) {
+		model.addAttribute("consultant", consultantService.getConsultantById(id));
+		model.addAttribute("pageTitle", "Edit Consultant");
+		model.addAttribute("formAction", "/consultants/edit/" + id);
+		return "consultant-form";
 	}
 
 	@PostMapping("/consultants/edit/{id}")
@@ -80,36 +80,30 @@ public class ConsultantController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("pageTitle", "Edit Consultant");
 			model.addAttribute("formAction", "/consultants/edit/" + id);
+			model.addAttribute("errorMessage", "Please correct the highlighted fields and try again.");
 			return "consultant-form";
 		}
 
-		try {
-			consultantService.updateConsultant(id, consultant);
-			redirectAttributes.addFlashAttribute("successMessage", "Consultant updated successfully.");
-			return "redirect:/consultants";
-		}
-		catch (IllegalArgumentException ex) {
-			redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-			return "redirect:/consultants";
-		}
+		consultantService.updateConsultant(id, consultant);
+		redirectAttributes.addFlashAttribute("successMessage", "Consultant updated successfully.");
+		return "redirect:/consultants";
 	}
 
 	@GetMapping("/consultants/delete/{id}")
 	public String deleteConsultant(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-		try {
-			consultantService.deleteConsultant(id);
-			redirectAttributes.addFlashAttribute("successMessage", "Consultant deleted successfully.");
-		}
-		catch (IllegalArgumentException ex) {
-			redirectAttributes.addFlashAttribute("errorMessage", ex.getMessage());
-		}
+		consultantService.deleteConsultant(id);
+		redirectAttributes.addFlashAttribute("successMessage", "Consultant deleted successfully.");
 		return "redirect:/consultants";
 	}
 
-	@GetMapping("/consultants/search")
-	public String searchConsultants(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-		model.addAttribute("consultants", consultantService.searchConsultants(keyword));
-		model.addAttribute("keyword", keyword == null ? "" : keyword);
+	private String showConsultantList(String keyword, Model model) {
+		List<Consultant> consultants = consultantService.searchConsultants(keyword);
+		boolean searching = keyword != null && !keyword.isBlank();
+
+		model.addAttribute("consultants", consultants);
+		model.addAttribute("keyword", searching ? keyword.trim() : "");
+		model.addAttribute("searching", searching);
+		model.addAttribute("resultCount", consultants.size());
 		return "consultants";
 	}
 }

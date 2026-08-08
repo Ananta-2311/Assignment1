@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${pageTitle} ?: 'Error | Consultant Management System')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container page-shell">
+	<div class="content-panel col-12 col-lg-8 mx-auto text-center py-5">
+		<h1 class="h2 mb-3" th:text="${errorTitle} ?: 'Something Went Wrong'">Something Went Wrong</h1>
+		<p class="text-secondary mb-4"
+			th:text="${errorMessage} ?: 'An unexpected error occurred. Please try again later.'">
+			An unexpected error occurred. Please try again later.
+		</p>
+		<div class="d-flex flex-wrap justify-content-center gap-2">
+			<a class="btn btn-primary" th:href="@{/dashboard}">Go to Dashboard</a>
+			<a class="btn btn-outline-secondary" th:href="@{/consultants}">View Consultants</a>
+		</div>
+	</div>
+</main>
+
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

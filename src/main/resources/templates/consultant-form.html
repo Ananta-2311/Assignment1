@@ -10,6 +10,8 @@
 		<p class="text-secondary mb-0">Fill in the consultant details below.</p>
 	</div>
 
+	<div th:if="${errorMessage}" class="alert alert-danger" role="alert" th:text="${errorMessage}"></div>
+
 	<div class="content-panel col-12 col-lg-8 mx-auto mx-lg-0">
 		<form th:action="@{${formAction}}" th:object="${consultant}" method="post" novalidate>
 			<div class="mb-3">
