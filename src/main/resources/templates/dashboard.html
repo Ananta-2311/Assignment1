@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Dashboard | Consultant Management System')}"></head>
+<body>
+<div th:replace="~{fragments/layout :: navbar}"></div>
+
+<main class="container page-shell">
+	<div class="mb-4">
+		<h1 class="h2 mb-2">Consultant Management System</h1>
+		<p class="text-secondary mb-0">Overview of consultants currently managed in the system.</p>
+	</div>
+
+	<div class="row g-4 mb-4">
+		<div class="col-md-4">
+			<div class="stat-panel h-100">
+				<p class="text-secondary mb-2">Total Consultants</p>
+				<p class="display-5 fw-semibold mb-0" th:text="${totalConsultants}">0</p>
+			</div>
+		</div>
+		<div class="col-md-8">
+			<div class="content-panel h-100">
+				<h2 class="h5 mb-3">Quick Actions</h2>
+				<p class="text-secondary mb-3">Manage consultant records or register a new consultant.</p>
+				<div class="d-flex flex-wrap gap-2">
+					<a class="btn btn-primary" th:href="@{/consultants}">View Consultant List</a>
+					<a class="btn btn-outline-primary" th:href="@{/consultants/add}">Add Consultant</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+
+<div th:replace="~{fragments/layout :: scripts}"></div>
+</body>
+</html>

@@ -9,7 +9,7 @@ Java Spring Boot web application for managing consultants.
 - MySQL
 - Thymeleaf
 - Validation
-- Bootstrap 5 (WebJars)
+- Bootstrap 5 (CDN)
 
 ## Requirements
 
