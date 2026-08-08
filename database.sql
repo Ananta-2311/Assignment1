@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS consultants (
   DEFAULT CHARSET=utf8mb4
   COLLATE=utf8mb4_unicode_ci;
 
--- Sample data for local development (Nepali names)
+-- Sample data for local development
 DELETE FROM consultants;
 
 INSERT INTO consultants (name, email, phone, technology, experience) VALUES
